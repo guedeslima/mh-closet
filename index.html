@@ -38,8 +38,8 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
 .cat-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
 .cat-card:hover { border-color: var(--rose); transform: translateY(-2px); }
-.cat-img-wrap { height: 130px; overflow: hidden; background: var(--nude-light); display: flex; align-items: center; justify-content: center; }
-.cat-img-wrap img { width: 100%; height: 100%; object-fit: contain; background: var(--nude-light); }
+.cat-img-wrap { height: 160px; overflow: hidden; background: var(--nude-light); display: flex; align-items: center; justify-content: center; }
+.cat-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 .cat-emoji-big { font-size: 44px; }
 .cat-info { padding: 10px 12px; }
 .cat-name { font-size: 13px; font-weight: 500; }
@@ -129,7 +129,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .cat-cover-slot { width: 100%; height: 110px; border: 2px dashed var(--border); border-radius: 8px; position: relative; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border 0.2s; background: var(--nude-light); }
 .cat-cover-slot:hover { border-color: var(--rose); }
 .cat-cover-slot input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.cat-cover-slot img { width: 100%; height: 100%; object-fit: contain; background: var(--nude-light); }
+.cat-cover-slot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 .cat-cover-slot .cc-label { font-size: 11px; color: var(--gray); text-align: center; padding: 4px; pointer-events: none; }
 .cat-cover-rm { position: absolute; top: 3px; right: 3px; background: var(--rose); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
 
