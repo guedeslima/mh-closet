@@ -226,54 +226,66 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 
     <!-- FORM PRODUTO -->
     <div id="adminAdd">
-      <div class="form-group">
-        <label>Nome da peça *</label>
-        <input id="fName" placeholder="Ex: Vestido floral manga curta" />
+
+      <!-- PASSO 1: escolher categoria -->
+      <div id="stepCat">
+        <p style="font-size:14px;color:var(--gray);margin-bottom:16px;">Em qual categoria é este produto?</p>
+        <div class="cats-grid" id="adminCatPicker"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Preço (R$) *</label>
-          <input id="fPrice" placeholder="89,90" />
+
+      <!-- PASSO 2: formulário -->
+      <div id="stepForm" style="display:none;">
+        <div id="selectedCatBadge" style="display:inline-flex;align-items:center;gap:8px;background:var(--rose-light);border:1px solid var(--rose);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--rose-dark);margin-bottom:20px;cursor:pointer;" onclick="backToCatPicker()">
+          <span id="selectedCatLabel"></span>
+          <span style="font-size:16px;opacity:0.6;">✕ trocar</span>
         </div>
         <div class="form-group">
-          <label>Categoria *</label>
-          <select id="fCat"><option value="">Selecione...</option></select>
+          <label>Nome da peça *</label>
+          <input id="fName" placeholder="Ex: Vestido floral manga curta" />
         </div>
-      </div>
-      <div class="form-row3">
-        <div class="form-group">
-          <label>Tamanhos</label>
-          <input id="fSizes" placeholder="P, M, G, GG" />
-        </div>
-        <div class="form-group">
-          <label>Medidas</label>
-          <input id="fMeasures" placeholder="Comp. 95cm, Larg. 40cm" />
-        </div>
-        <div class="form-group">
-          <label>Estoque (qtd) *</label>
-          <input id="fStock" type="number" min="0" placeholder="10" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Descrição / Observações</label>
-        <textarea id="fDesc" rows="2" placeholder="Ex: Tecido viscose, leve e confortável."></textarea>
-      </div>
-      <div class="form-group">
-        <label>Fotos do produto (até 2)</label>
-        <div class="upload-grid">
-          <div class="upload-slot" id="slot0">
-            <input type="file" accept="image/*" onchange="handleImg(event,0)" />
-            <div class="slot-label">📷<br>Foto 1<br><small>Clique aqui</small></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preço (R$) *</label>
+            <input id="fPrice" placeholder="89,90" />
           </div>
-          <div class="upload-slot" id="slot1">
-            <input type="file" accept="image/*" onchange="handleImg(event,1)" />
-            <div class="slot-label">📷<br>Foto 2<br><small>Clique aqui</small></div>
+          <div class="form-group">
+            <label>Estoque (qtd) *</label>
+            <input id="fStock" type="number" min="0" placeholder="10" />
           </div>
         </div>
-        <p class="img-note">⚡ Fotos comprimidas automaticamente.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tamanhos</label>
+            <input id="fSizes" placeholder="P, M, G, GG" />
+          </div>
+          <div class="form-group">
+            <label>Medidas</label>
+            <input id="fMeasures" placeholder="Comp. 95cm, Larg. 40cm" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descrição / Observações</label>
+          <textarea id="fDesc" rows="2" placeholder="Ex: Tecido viscose, leve e confortável."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Fotos do produto (até 2)</label>
+          <div class="upload-grid">
+            <div class="upload-slot" id="slot0">
+              <input type="file" accept="image/*" onchange="handleImg(event,0)" />
+              <div class="slot-label">📷<br>Foto 1<br><small>Clique aqui</small></div>
+            </div>
+            <div class="upload-slot" id="slot1">
+              <input type="file" accept="image/*" onchange="handleImg(event,1)" />
+              <div class="slot-label">📷<br>Foto 2<br><small>Clique aqui</small></div>
+            </div>
+          </div>
+          <p class="img-note">⚡ Fotos comprimidas automaticamente.</p>
+        </div>
+        <input type="hidden" id="editId" />
+        <input type="hidden" id="fCat" />
+        <button class="save-btn" id="saveBtn" onclick="saveProduct()">Salvar produto</button>
       </div>
-      <input type="hidden" id="editId" />
-      <button class="save-btn" id="saveBtn" onclick="saveProduct()">Salvar produto</button>
+
     </div>
 
     <!-- LISTA POR CATEGORIA -->
@@ -543,7 +555,7 @@ window.closeOrderModal=()=>{ $('orderModal').classList.remove('open'); orderProd
 
 window.openLogin=function(){ $('loginPass').value=''; $('loginErr').style.display='none'; $('loginOverlay').classList.add('open'); setTimeout(()=>$('loginPass').focus(),100); };
 window.closeLogin=()=>$('loginOverlay').classList.remove('open');
-window.doLogin=function(){ if($('loginPass').value===PASS){ closeLogin(); $('storeView').style.display='none'; $('adminView').style.display='block'; buildCatSelect(); showTab('list'); } else $('loginErr').style.display='block'; };
+window.doLogin=function(){ if($('loginPass').value===PASS){ closeLogin(); $('storeView').style.display='none'; $('adminView').style.display='block'; showTab('list'); } else $('loginErr').style.display='block'; };
 window.exitAdmin=function(){ $('adminView').style.display='none'; $('storeView').style.display='block'; };
 
 window.showTab=function(tab){
@@ -553,13 +565,55 @@ window.showTab=function(tab){
   if(tab==='covers') renderCatCovers();
 };
 
-function buildCatSelect(){ const s=$('fCat'); s.innerHTML='<option value="">Selecione...</option>'; CATS.forEach(c=>{ const o=document.createElement('option'); o.value=c.id; o.textContent=c.emoji+' '+c.name; s.appendChild(o); }); }
+function buildAdminCatPicker(){
+  const g = document.getElementById('adminCatPicker'); if(!g) return;
+  g.innerHTML='';
+  CATS.forEach(c=>{
+    const count = products.filter(p=>p.cat===c.id).length;
+    const cover = catCovers[c.id];
+    const d = document.createElement('div');
+    d.className='cat-card';
+    d.style.cssText='cursor:pointer;';
+    d.innerHTML=`
+      <div class="cat-img-wrap">
+        ${cover?`<img src="${cover}" alt="${c.name}">`:`<span class="cat-emoji-big">${c.emoji}</span>`}
+      </div>
+      <div class="cat-info">
+        <div class="cat-name">${c.name}</div>
+        <div class="cat-count">${count} peça${count!==1?'s':''}</div>
+      </div>`;
+    d.onclick=()=>selectAdminCat(c.id);
+    g.appendChild(d);
+  });
+}
+
+function selectAdminCat(catId){
+  const c = CATS.find(x=>x.id===catId);
+  document.getElementById('fCat').value = catId;
+  document.getElementById('selectedCatLabel').textContent = c.emoji+' '+c.name;
+  document.getElementById('stepCat').style.display='none';
+  document.getElementById('stepForm').style.display='block';
+}
+
+window.backToCatPicker=function(){
+  document.getElementById('fCat').value='';
+  document.getElementById('stepCat').style.display='block';
+  document.getElementById('stepForm').style.display='none';
+};
 
 window.handleImg=function(e,slot){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async ev=>{ imgSlots[slot]=await compress(ev.target.result); renderSlot(slot); }; r.readAsDataURL(f); e.target.value=''; };
 function renderSlot(s){ const el=$('slot'+s); if(imgSlots[s]){ el.innerHTML=`<img src="${imgSlots[s]}"><button class="rm-img" onclick="removeSlot(${s})">✕</button>`; } else { el.innerHTML=`<input type="file" accept="image/*" onchange="handleImg(event,${s})"><div class="slot-label">📷<br>Foto ${s+1}<br><small>Clique aqui</small></div>`; } }
 window.removeSlot=s=>{ imgSlots[s]=null; renderSlot(s); };
 
-function clearForm(){ ['fName','fPrice','fSizes','fMeasures','fStock','fDesc'].forEach(i=>$(i).value=''); $('fCat').value=''; $('editId').value=''; imgSlots=[null,null]; renderSlot(0); renderSlot(1); $('saveBtn').textContent='Salvar produto'; $('saveBtn').disabled=false; }
+function clearForm(){
+  ['fName','fPrice','fSizes','fMeasures','fStock','fDesc'].forEach(i=>$(i).value='');
+  $('fCat').value=''; $('editId').value='';
+  imgSlots=[null,null]; renderSlot(0); renderSlot(1);
+  $('saveBtn').textContent='Salvar produto'; $('saveBtn').disabled=false;
+  $('stepCat').style.display='block';
+  $('stepForm').style.display='none';
+  buildAdminCatPicker();
+}
 
 window.saveProduct=async function(){ const name=$('fName').value.trim(),price=$('fPrice').value.trim(),cat=$('fCat').value; if(!name||!price||!cat){ toast('⚠️ Preencha nome, preço e categoria.'); return; }
   const btn=$('saveBtn'); btn.disabled=true; btn.textContent='Salvando...'; loading(true,'Salvando produto...');
@@ -573,7 +627,12 @@ window.saveProduct=async function(){ const name=$('fName').value.trim(),price=$(
 };
 
 window.editProduct=function(id){ const p=products.find(x=>x.id===id); if(!p) return; showTab('add');
-  $('fName').value=p.name||''; $('fPrice').value=p.price||''; $('fCat').value=p.cat||''; $('fSizes').value=p.sizes||''; $('fMeasures').value=p.measures||''; $('fStock').value=p.stock||''; $('fDesc').value=p.desc||''; $('editId').value=p.id;
+  const c=CATS.find(x=>x.id===p.cat);
+  $('fCat').value=p.cat||'';
+  $('selectedCatLabel').textContent=c?c.emoji+' '+c.name:'';
+  $('stepCat').style.display='none';
+  $('stepForm').style.display='block';
+  $('fName').value=p.name||''; $('fPrice').value=p.price||''; $('fSizes').value=p.sizes||''; $('fMeasures').value=p.measures||''; $('fStock').value=p.stock||''; $('fDesc').value=p.desc||''; $('editId').value=p.id;
   imgSlots=p.imgs?[...p.imgs,null].slice(0,2):[null,null]; renderSlot(0); renderSlot(1); $('saveBtn').textContent='Atualizar produto';
 };
 
