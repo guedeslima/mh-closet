@@ -18,10 +18,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--nude-light); color:
 header { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 50; }
 .logo { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 1px; }
 .logo span { color: var(--rose); }
-.header-right { display: flex; align-items: center; gap: 12px; }
-.header-info { font-size: 12px; color: var(--gray); text-align: right; line-height: 1.5; }
-.admin-btn { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; color: var(--gray); cursor: pointer; font-family: inherit; }
-.admin-btn:hover { background: var(--gray-light); }
+.admin-secret { opacity: 0; font-size: 10px; color: transparent; cursor: default; padding: 20px 10px; user-select: none; }
 
 nav.nav-cats { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
 nav.nav-cats::-webkit-scrollbar { display: none; }
@@ -38,12 +35,15 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .section { padding: 32px 24px; }
 .section-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 20px; }
 
-.cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
-.cat-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+.cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+.cat-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
 .cat-card:hover { border-color: var(--rose); transform: translateY(-2px); }
-.cat-emoji { font-size: 28px; display: block; margin-bottom: 8px; }
+.cat-img-wrap { height: 120px; overflow: hidden; background: var(--nude-light); display: flex; align-items: center; justify-content: center; }
+.cat-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.cat-emoji-big { font-size: 44px; }
+.cat-info { padding: 10px 12px; }
 .cat-name { font-size: 13px; font-weight: 500; }
-.cat-count { font-size: 11px; color: var(--gray); margin-top: 4px; }
+.cat-count { font-size: 11px; color: var(--gray); margin-top: 3px; }
 
 .page-header { padding: 20px 24px 0; display: flex; align-items: center; gap: 12px; }
 .back-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 13px; color: var(--gray); cursor: pointer; font-family: inherit; }
@@ -86,7 +86,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .admin-header h2 { color: #fff; font-family: 'Playfair Display', serif; font-size: 18px; }
 .admin-exit { background: none; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 6px 12px; color: rgba(255,255,255,0.8); font-size: 12px; cursor: pointer; font-family: inherit; }
 .admin-body { padding: 24px; max-width: 820px; margin: 0 auto; }
-.admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
 .admin-tab { padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; cursor: pointer; background: var(--white); color: var(--gray); font-family: inherit; transition: all 0.2s; }
 .admin-tab.active { background: var(--rose); color: #fff; border-color: var(--rose); }
 .form-group { margin-bottom: 16px; }
@@ -109,6 +109,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .save-btn:hover { background: var(--rose-dark); }
 .save-btn:disabled { background: var(--gray); cursor: not-allowed; }
 
+.cat-section-title { font-family: 'Playfair Display', serif; font-size: 16px; margin: 20px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: var(--dark); }
 .admin-list-item { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
 .ali-img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); flex-shrink: 0; }
 .ali-ph { width: 64px; height: 64px; border-radius: 8px; border: 1px solid var(--border); flex-shrink: 0; background: var(--nude-light); display: flex; align-items: center; justify-content: center; font-size: 22px; }
@@ -119,10 +120,24 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 .btn-edit { background: var(--gray-light); border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; color: var(--dark); font-family: inherit; }
 .btn-del { background: #fee2e2; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; color: #9b1c1c; font-family: inherit; }
 
+.cat-cover-section { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.cat-cover-section h3 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+.cat-cover-section p { font-size: 12px; color: var(--gray); margin-bottom: 16px; }
+.cat-covers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.cat-cover-item { text-align: center; }
+.cat-cover-item label { font-size: 11px; color: var(--gray); display: block; margin-bottom: 6px; }
+.cat-cover-slot { width: 100%; height: 90px; border: 2px dashed var(--border); border-radius: 8px; position: relative; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border 0.2s; }
+.cat-cover-slot:hover { border-color: var(--rose); }
+.cat-cover-slot input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.cat-cover-slot img { width: 100%; height: 100%; object-fit: cover; }
+.cat-cover-slot .cc-label { font-size: 11px; color: var(--gray); text-align: center; padding: 4px; pointer-events: none; }
+.cat-cover-rm { position: absolute; top: 3px; right: 3px; background: var(--rose); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
+
 .login-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 300; align-items: center; justify-content: center; }
 .login-overlay.open { display: flex; }
 .login-box { background: var(--white); border-radius: 16px; padding: 32px; width: 100%; max-width: 340px; }
-.login-box h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 20px; }
+.login-box h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 6px; }
+.login-hint { font-size: 12px; color: var(--gray); margin-bottom: 20px; }
 .login-box input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; margin-bottom: 12px; font-family: inherit; outline: none; }
 .login-box input:focus { border-color: var(--rose); }
 .login-btn { width: 100%; background: var(--rose); color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 14px; cursor: pointer; font-family: inherit; font-weight: 500; margin-bottom: 8px; }
@@ -147,7 +162,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
   header { padding: 0 14px; }
   .section { padding: 20px 14px; }
   .logo { font-size: 18px; }
-  .header-info { display: none; }
+  .cats-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
 </style>
 </head>
@@ -163,10 +178,8 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 <div id="storeView">
   <header>
     <div class="logo">M<span>&</span>H Closet</div>
-    <div class="header-right">
-      <div class="header-info">Tefé, AM · (97) 98445-5844</div>
-      <button class="admin-btn" onclick="openLogin()">Admin</button>
-    </div>
+    <!-- botão admin invisível — clique 5x no logo para abrir -->
+    <span class="admin-secret" id="secretTap" onclick="secretClick()">.</span>
   </header>
   <nav class="nav-cats" id="navCats"></nav>
 
@@ -208,7 +221,10 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
     <div class="admin-tabs">
       <button class="admin-tab active" id="tabAdd" onclick="showTab('add')">+ Adicionar produto</button>
       <button class="admin-tab" id="tabList" onclick="showTab('list')">Gerenciar produtos</button>
+      <button class="admin-tab" id="tabCovers" onclick="showTab('covers')">Fotos das categorias</button>
     </div>
+
+    <!-- FORM PRODUTO -->
     <div id="adminAdd">
       <div class="form-group">
         <label>Nome da peça *</label>
@@ -254,18 +270,30 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
             <div class="slot-label">📷<br>Foto 2<br><small>Clique aqui</small></div>
           </div>
         </div>
-        <p class="img-note">⚡ Fotos comprimidas automaticamente para carregamento rápido.</p>
+        <p class="img-note">⚡ Fotos comprimidas automaticamente.</p>
       </div>
       <input type="hidden" id="editId" />
       <button class="save-btn" id="saveBtn" onclick="saveProduct()">Salvar produto</button>
     </div>
+
+    <!-- LISTA POR CATEGORIA -->
     <div id="adminList" style="display:none;">
       <div id="adminListContent"></div>
+    </div>
+
+    <!-- FOTOS DAS CATEGORIAS -->
+    <div id="adminCovers" style="display:none;">
+      <div class="cat-cover-section">
+        <h3>Foto de capa de cada categoria</h3>
+        <p>Essa foto aparece no card da categoria na página inicial. Escolha uma imagem que represente bem cada categoria.</p>
+        <div class="cat-covers-grid" id="catCoversGrid"></div>
+        <button class="save-btn" style="margin-top:20px;" onclick="saveCovers()">Salvar fotos das categorias</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL PRODUTO -->
 <div class="modal-overlay" id="prodModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -286,6 +314,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
     <h3>Acesso admin</h3>
+    <p class="login-hint">M&H Closet — área restrita</p>
     <p class="login-err" id="loginErr">Senha incorreta.</p>
     <input type="password" id="loginPass" placeholder="Senha" onkeydown="if(event.key==='Enter')doLogin()" />
     <button class="login-btn" onclick="doLogin()">Entrar</button>
@@ -295,7 +324,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const fb = initializeApp({
   apiKey: "AIzaSyAelR0erIz6ojkjFT-5qIEzjI7xB7HVu0o",
@@ -326,6 +355,8 @@ const CATS = [
 ];
 
 let products = [], imgSlots = [null,null], currentCat = null;
+let catCovers = {}, coverSlots = {};
+let secretCount = 0, secretTimer = null;
 
 const $ = id => document.getElementById(id);
 const loading = (v,m) => { $('loadingOverlay').classList.toggle('open',v); if(m) $('loadMsg').textContent=m; };
@@ -333,10 +364,30 @@ function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show');
 
 function compress(dataUrl){ return new Promise(res=>{ const i=new Image(); i.onload=()=>{ let w=i.width,h=i.height,r=Math.min(MAX_PX/w,MAX_PX/h,1); w=Math.round(w*r); h=Math.round(h*r); const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(i,0,0,w,h); res(c.toDataURL('image/jpeg',QUALITY)); }; i.src=dataUrl; }); }
 
+// ── SECRET ADMIN (clicar 5x no logo) ──
+window.secretClick = function(){
+  secretCount++;
+  clearTimeout(secretTimer);
+  secretTimer = setTimeout(()=>{ secretCount=0; },2000);
+  if(secretCount>=5){ secretCount=0; openLogin(); }
+};
+document.querySelector('.logo').addEventListener('click', window.secretClick);
+
 async function load(){
-  loading(true,'Carregando produtos...');
-  try { const q=query(collection(db,'products'),orderBy('createdAt','desc')); const s=await getDocs(q); products=s.docs.map(d=>({id:d.id,...d.data()})); }
-  catch { const s=await getDocs(collection(db,'products')); products=s.docs.map(d=>({id:d.id,...d.data()})); }
+  loading(true,'Carregando...');
+  try {
+    const q = query(collection(db,'products'), orderBy('createdAt','desc'));
+    const s = await getDocs(q);
+    products = s.docs.map(d=>({id:d.id,...d.data()}));
+  } catch {
+    const s = await getDocs(collection(db,'products'));
+    products = s.docs.map(d=>({id:d.id,...d.data()}));
+  }
+  // carregar capas das categorias
+  try {
+    const covDoc = await getDoc(doc(db,'config','catCovers'));
+    if(covDoc.exists()) catCovers = covDoc.data();
+  } catch{}
   loading(false);
   renderHome();
   if(currentCat) renderProducts(currentCat);
@@ -344,12 +395,33 @@ async function load(){
 
 function renderHome(){
   const g=$('catsGrid'); g.innerHTML='';
-  CATS.forEach(c=>{ const n=products.filter(p=>p.cat===c.id).length; const d=document.createElement('div'); d.className='cat-card'; d.innerHTML=`<span class="cat-emoji">${c.emoji}</span><div class="cat-name">${c.name}</div><div class="cat-count">${n} peça${n!==1?'s':''}</div>`; d.onclick=()=>openCat(c.id); g.appendChild(d); });
+  CATS.forEach(c=>{
+    const count = products.filter(p=>p.cat===c.id).length;
+    const cover = catCovers[c.id];
+    const d = document.createElement('div');
+    d.className='cat-card';
+    d.innerHTML=`
+      <div class="cat-img-wrap">
+        ${cover ? `<img src="${cover}" alt="${c.name}">` : `<span class="cat-emoji-big">${c.emoji}</span>`}
+      </div>
+      <div class="cat-info">
+        <div class="cat-name">${c.name}</div>
+        <div class="cat-count">${count} peça${count!==1?'s':''}</div>
+      </div>`;
+    d.onclick=()=>openCat(c.id);
+    g.appendChild(d);
+  });
 }
 
 function buildNav(){
   const nav=$('navCats'); nav.innerHTML='';
-  CATS.forEach(c=>{ const b=document.createElement('button'); b.className='nav-cat'; b.dataset.cat=c.id; b.textContent=c.emoji+' '+c.name; b.onclick=()=>{exitAdmin();openCat(c.id);}; nav.appendChild(b); });
+  CATS.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='nav-cat'; b.dataset.cat=c.id;
+    b.textContent=c.emoji+' '+c.name;
+    b.onclick=()=>{exitAdmin();openCat(c.id);};
+    nav.appendChild(b);
+  });
 }
 
 function openCat(id){
@@ -363,9 +435,7 @@ function openCat(id){
 window.goHome=function(){ currentCat=null; $('catView').style.display='none'; $('homeView').style.display='block'; document.querySelectorAll('.nav-cat').forEach(b=>b.classList.remove('active')); };
 
 function imgHtml(imgs){ return imgs&&imgs.length ? imgs.slice(0,2).map(u=>`<img src="${u}" alt="foto" loading="lazy">`).join('') : '<div class="img-ph">📷</div>'; }
-
 function stockBadge(p){ const s=parseInt(p.stock)||0; return s===0?'<span class="prod-stock stock-out">Sem estoque</span>':s<=3?`<span class="prod-stock stock-low">Últimas ${s} un.</span>`:'<span class="prod-stock stock-ok">Em estoque</span>'; }
-
 const wppSvg=`<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
 
 function renderProducts(catId){
@@ -396,18 +466,22 @@ window.closeLogin=()=>$('loginOverlay').classList.remove('open');
 window.doLogin=function(){ if($('loginPass').value===PASS){ closeLogin(); $('storeView').style.display='none'; $('adminView').style.display='block'; buildCatSelect(); showTab('list'); } else $('loginErr').style.display='block'; };
 window.exitAdmin=function(){ $('adminView').style.display='none'; $('storeView').style.display='block'; };
 
-window.showTab=function(tab){ $('tabAdd').classList.toggle('active',tab==='add'); $('tabList').classList.toggle('active',tab==='list'); $('adminAdd').style.display=tab==='add'?'block':'none'; $('adminList').style.display=tab==='list'?'block':'none'; if(tab==='list') renderAdminList(); if(tab==='add') clearForm(); };
+window.showTab=function(tab){
+  ['add','list','covers'].forEach(t=>{ $('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active',t===tab); $('admin'+t.charAt(0).toUpperCase()+t.slice(1)).style.display=t===tab?'block':'none'; });
+  if(tab==='list') renderAdminList();
+  if(tab==='add') clearForm();
+  if(tab==='covers') renderCatCovers();
+};
 
 function buildCatSelect(){ const s=$('fCat'); s.innerHTML='<option value="">Selecione...</option>'; CATS.forEach(c=>{ const o=document.createElement('option'); o.value=c.id; o.textContent=c.emoji+' '+c.name; s.appendChild(o); }); }
 
 window.handleImg=function(e,slot){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async ev=>{ imgSlots[slot]=await compress(ev.target.result); renderSlot(slot); }; r.readAsDataURL(f); e.target.value=''; };
-
 function renderSlot(s){ const el=$('slot'+s); if(imgSlots[s]){ el.innerHTML=`<img src="${imgSlots[s]}"><button class="rm-img" onclick="removeSlot(${s})">✕</button>`; } else { el.innerHTML=`<input type="file" accept="image/*" onchange="handleImg(event,${s})"><div class="slot-label">📷<br>Foto ${s+1}<br><small>Clique aqui</small></div>`; } }
 window.removeSlot=s=>{ imgSlots[s]=null; renderSlot(s); };
 
 function clearForm(){ ['fName','fPrice','fSizes','fMeasures','fStock','fDesc'].forEach(i=>$(i).value=''); $('fCat').value=''; $('editId').value=''; imgSlots=[null,null]; renderSlot(0); renderSlot(1); $('saveBtn').textContent='Salvar produto'; $('saveBtn').disabled=false; }
 
-window.saveProduct=async function(){ const name=$('fName').value.trim(), price=$('fPrice').value.trim(), cat=$('fCat').value; if(!name||!price||!cat){ toast('⚠️ Preencha nome, preço e categoria.'); return; }
+window.saveProduct=async function(){ const name=$('fName').value.trim(),price=$('fPrice').value.trim(),cat=$('fCat').value; if(!name||!price||!cat){ toast('⚠️ Preencha nome, preço e categoria.'); return; }
   const btn=$('saveBtn'); btn.disabled=true; btn.textContent='Salvando...'; loading(true,'Salvando produto...');
   try{ const editId=$('editId').value; const imgs=imgSlots.filter(Boolean);
     const data={ name,price,cat,imgs, sizes:$('fSizes').value.trim(), measures:$('fMeasures').value.trim(), stock:$('fStock').value||'0', desc:$('fDesc').value.trim() };
@@ -428,12 +502,62 @@ window.deleteProduct=async function(id){ if(!confirm('Excluir este produto perma
   catch(e){ toast('❌ Erro: '+e.message); } loading(false);
 };
 
-function renderAdminList(){ const el=$('adminListContent'); if(!products.length){ el.innerHTML='<div class="no-products"><span>📦</span>Nenhum produto cadastrado ainda.</div>'; return; }
-  el.innerHTML=''; products.forEach(p=>{ const c=CATS.find(x=>x.id===p.cat); const d=document.createElement('div'); d.className='admin-list-item';
-    const th=p.imgs&&p.imgs[0]?`<img class="ali-img" src="${p.imgs[0]}" alt="">`:'<div class="ali-ph">📷</div>';
-    d.innerHTML=`${th}<div class="ali-info"><div class="ali-name">${p.name}</div><div class="ali-sub">R$ ${p.price} · ${c?c.name:''} · Estoque: ${p.stock||0}${p.sizes?' · '+p.sizes:''}</div></div><div class="ali-actions"><button class="btn-edit" onclick="editProduct('${p.id}')">Editar</button><button class="btn-del" onclick="deleteProduct('${p.id}')">Excluir</button></div>`;
-    el.appendChild(d); });
+// ── LISTA ADMIN POR CATEGORIA ──
+function renderAdminList(){
+  const el=$('adminListContent'); el.innerHTML='';
+  if(!products.length){ el.innerHTML='<div class="no-products"><span>📦</span>Nenhum produto cadastrado ainda.</div>'; return; }
+  CATS.forEach(c=>{
+    const items=products.filter(p=>p.cat===c.id);
+    if(!items.length) return;
+    const title=document.createElement('div');
+    title.className='cat-section-title';
+    title.textContent=c.emoji+' '+c.name+' ('+items.length+')';
+    el.appendChild(title);
+    items.forEach(p=>{
+      const d=document.createElement('div'); d.className='admin-list-item';
+      const th=p.imgs&&p.imgs[0]?`<img class="ali-img" src="${p.imgs[0]}" alt="">`:'<div class="ali-ph">📷</div>';
+      d.innerHTML=`${th}<div class="ali-info"><div class="ali-name">${p.name}</div><div class="ali-sub">R$ ${p.price} · Estoque: ${p.stock||0}${p.sizes?' · '+p.sizes:''}</div></div><div class="ali-actions"><button class="btn-edit" onclick="editProduct('${p.id}')">Editar</button><button class="btn-del" onclick="deleteProduct('${p.id}')">Excluir</button></div>`;
+      el.appendChild(d);
+    });
+  });
 }
+
+// ── CAPAS DAS CATEGORIAS ──
+function renderCatCovers(){
+  const g=$('catCoversGrid'); g.innerHTML=''; coverSlots={};
+  CATS.forEach(c=>{
+    coverSlots[c.id]=catCovers[c.id]||null;
+    const wrap=document.createElement('div'); wrap.className='cat-cover-item';
+    wrap.innerHTML=`<label>${c.emoji} ${c.name}</label><div class="cat-cover-slot" id="cslot_${c.id}"></div>`;
+    g.appendChild(wrap);
+    renderCoverSlot(c.id);
+  });
+}
+
+function renderCoverSlot(catId){
+  const el=$('cslot_'+catId); if(!el) return;
+  if(coverSlots[catId]){
+    el.innerHTML=`<img src="${coverSlots[catId]}" alt=""><button class="cat-cover-rm" onclick="removeCover('${catId}')">✕</button>`;
+  } else {
+    el.innerHTML=`<input type="file" accept="image/*" onchange="handleCoverImg(event,'${catId}')"><div class="cc-label">📷 Clique</div>`;
+  }
+}
+
+window.handleCoverImg=function(e,catId){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async ev=>{ coverSlots[catId]=await compress(ev.target.result); renderCoverSlot(catId); }; r.readAsDataURL(f); e.target.value=''; };
+window.removeCover=function(catId){ coverSlots[catId]=null; renderCoverSlot(catId); };
+
+window.saveCovers=async function(){
+  loading(true,'Salvando capas...');
+  try{
+    const data={};
+    CATS.forEach(c=>{ if(coverSlots[c.id]) data[c.id]=coverSlots[c.id]; });
+    await setDoc(doc(db,'config','catCovers'),data);
+    catCovers=data;
+    toast('✅ Fotos das categorias salvas!');
+    renderHome();
+  }catch(e){ toast('❌ Erro: '+e.message); }
+  loading(false);
+};
 
 buildNav(); load();
 </script>
