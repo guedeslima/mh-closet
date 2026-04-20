@@ -436,7 +436,7 @@ const CATS = [
 let products = [], imgSlots = [null,null], currentCat = null;
 let catCovers = {}, coverSlots = {};
 let storeConfig = {};
-let secretCount = 0, secretTimer = null;
+let secretCount = 0, secretTimer = null, holdTimer = null;
 
 const $ = id => document.getElementById(id);
 const loading = (v,m) => { $('loadingOverlay').classList.toggle('open',v); if(m) $('loadMsg').textContent=m; };
@@ -445,13 +445,16 @@ function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show');
 function compress(dataUrl){ return new Promise(res=>{ const i=new Image(); i.onload=()=>{ let w=i.width,h=i.height,r=Math.min(MAX_PX/w,MAX_PX/h,1); w=Math.round(w*r); h=Math.round(h*r); const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(i,0,0,w,h); res(c.toDataURL('image/jpeg',QUALITY)); }; i.src=dataUrl; }); }
 
 // ── SECRET ADMIN (clicar 5x no logo) ──
-window.secretClick = function(){
-  secretCount++;
-  clearTimeout(secretTimer);
-  secretTimer = setTimeout(()=>{ secretCount=0; },2000);
-  if(secretCount>=5){ secretCount=0; openLogin(); }
-};
-document.querySelector('.logo').addEventListener('click', window.secretClick);
+// ── 5 CLIQUES RÁPIDOS NO LOGO para abrir admin ──
+(function(){
+  let count = 0, timer = null;
+  document.querySelector('.logo').addEventListener('click', function(){
+    count++;
+    clearTimeout(timer);
+    timer = setTimeout(()=>{ count=0; }, 1000);
+    if(count >= 5){ count=0; openLogin(); }
+  });
+})();
 
 async function load(){
   loading(true,'Carregando...');
