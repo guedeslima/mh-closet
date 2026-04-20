@@ -445,8 +445,17 @@ function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show');
 function compress(dataUrl){ return new Promise(res=>{ const i=new Image(); i.onload=()=>{ let w=i.width,h=i.height,r=Math.min(MAX_PX/w,MAX_PX/h,1); w=Math.round(w*r); h=Math.round(h*r); const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(i,0,0,w,h); res(c.toDataURL('image/jpeg',QUALITY)); }; i.src=dataUrl; }); }
 
 // ── SECRET ADMIN (clicar 5x no logo) ──
-// ── ABRIR ADMIN VIA /admin na URL ──
-if(location.hash === '#admin' || location.search === '?admin') openLogin();
+// ── ABRIR ADMIN: #admin na URL OU 4 cliques no logo ──
+if(location.hash === '#admin') setTimeout(()=>openLogin(), 800);
+(function(){
+  let count = 0, timer = null;
+  document.querySelector('.logo').addEventListener('click', function(){
+    count++;
+    clearTimeout(timer);
+    timer = setTimeout(()=>{ count=0; }, 1500);
+    if(count >= 4){ count=0; openLogin(); }
+  });
+})();
 
 async function load(){
   loading(true,'Carregando...');
