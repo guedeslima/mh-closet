@@ -81,18 +81,43 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
 .wpp-btn { width:100%;background:#25d366;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.2s; }
 .wpp-btn:hover { background:#1da851; }
 
-.modal-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto; }
+.modal-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;align-items:center;justify-content:center;padding:16px;overflow-y:auto; }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--white);border-radius:16px;width:100%;max-width:480px;overflow:hidden;margin:auto;position:relative; }
-.modal-imgs { display:flex;height:260px;overflow:hidden;background:var(--primary-light); }
-.modal-imgs img { width:50%;height:100%;object-fit:cover; }
-.modal-imgs img:only-child { width:100%; }
-.modal-body { padding:20px; }
-.modal-name { font-family:'Playfair Display',serif;font-size:22px;margin-bottom:4px; }
-.modal-price { font-size:24px;font-weight:500;color:var(--primary-dark);margin-bottom:12px; }
-.modal-details { font-size:14px;color:var(--gray);line-height:1.9;margin-bottom:16px; }
-.modal-details strong { color:var(--dark); }
-.modal-close { position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;font-size:14px;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center; }
+.modal { background:var(--white);border-radius:16px;width:100%;max-width:860px;overflow:hidden;margin:auto;position:relative; }
+.modal-close { position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.4);border:none;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;z-index:10; }
+
+/* PRODUTO ESTILO E-COMMERCE */
+.prod-modal-layout { display:grid;grid-template-columns:80px 1fr 1fr;gap:0;min-height:460px; }
+.prod-modal-thumbs { padding:12px 8px;display:flex;flex-direction:column;gap:8px;background:var(--nude-light);border-right:1px solid var(--border);overflow-y:auto;max-height:480px; }
+.prod-thumb { width:60px;height:60px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;flex-shrink:0;transition:border 0.2s; }
+.prod-thumb img { width:100%;height:100%;object-fit:cover;object-position:top; }
+.prod-thumb.active { border-color:var(--primary); }
+.prod-modal-main-img { background:var(--nude-light);display:flex;align-items:center;justify-content:center;overflow:hidden;border-right:1px solid var(--border); }
+.prod-modal-main-img img { width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity 0.2s; }
+.prod-modal-info { padding:24px;display:flex;flex-direction:column;overflow-y:auto;max-height:480px; }
+.modal-name { font-family:'Playfair Display',serif;font-size:20px;margin-bottom:6px;line-height:1.3; }
+.modal-price { font-size:26px;font-weight:500;color:var(--primary-dark);margin-bottom:16px; }
+.modal-detail-row { font-size:13px;color:var(--gray);margin-bottom:6px;line-height:1.6; }
+.modal-detail-row strong { color:var(--dark); }
+.modal-sizes { display:flex;gap:8px;flex-wrap:wrap;margin:12px 0; }
+.modal-size-btn { padding:7px 14px;border:1.5px solid var(--border);border-radius:7px;background:none;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.15s; }
+.modal-size-btn:hover { border-color:var(--primary);color:var(--primary); }
+.modal-size-btn.active { background:var(--primary);border-color:var(--primary);color:#fff; }
+.modal-qty-row { display:flex;align-items:center;gap:10px;margin:12px 0 16px; }
+.qty-btn { width:34px;height:34px;border:1.5px solid var(--border);border-radius:7px;background:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s; }
+.qty-btn:hover { border-color:var(--primary); }
+.qty-val { font-size:16px;font-weight:500;min-width:28px;text-align:center; }
+.modal-wpp-btn { width:100%;background:#25d366;color:#fff;border:none;border-radius:9px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s;margin-top:auto; }
+.modal-wpp-btn:hover { background:#1da851; }
+.modal-err { font-size:12px;color:#9b1c1c;margin-bottom:8px;display:none; }
+.modal-stock-badge { display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;margin-bottom:12px; }
+
+@media(max-width:640px){
+  .prod-modal-layout { grid-template-columns:1fr;grid-template-rows:auto auto; }
+  .prod-modal-thumbs { flex-direction:row;max-height:none;border-right:none;border-bottom:1px solid var(--border);padding:8px 12px;overflow-x:auto; }
+  .prod-modal-main-img { height:280px;border-right:none;border-bottom:1px solid var(--border); }
+  .prod-modal-info { max-height:none; }
+}
 
 #adminView { display:none; }
 .admin-header { background:var(--header-bg);padding:16px 24px;display:flex;align-items:center;justify-content:space-between; }
@@ -373,46 +398,35 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
 <div class="modal-overlay" id="prodModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-imgs" id="modalImgs"></div>
-    <div class="modal-body">
-      <div class="modal-name" id="modalName"></div>
-      <div class="modal-price" id="modalPrice"></div>
-      <div class="modal-details" id="modalDetails"></div>
-      <button class="wpp-btn" id="modalWppBtn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Comprar pelo WhatsApp
-      </button>
+    <div class="prod-modal-layout">
+      <!-- MINIATURAS -->
+      <div class="prod-modal-thumbs" id="modalThumbs"></div>
+      <!-- FOTO PRINCIPAL -->
+      <div class="prod-modal-main-img" id="modalMainImg"></div>
+      <!-- INFO -->
+      <div class="prod-modal-info">
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div id="modalStockBadge"></div>
+        <div id="modalDetailRows"></div>
+        <div id="modalSizeGroup" style="margin-bottom:4px;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Tamanho</div>
+          <div class="modal-sizes" id="modalSizeBtns"></div>
+        </div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Quantidade</div>
+        <div class="modal-qty-row">
+          <button class="qty-btn" onclick="modalChangeQty(-1)">−</button>
+          <span class="qty-val" id="modalQtyVal">1</span>
+          <button class="qty-btn" onclick="modalChangeQty(1)">+</button>
+        </div>
+        <div class="modal-err" id="modalErr">Por favor selecione um tamanho.</div>
+        <button class="modal-wpp-btn" id="modalWppBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Comprar pelo WhatsApp</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL PEDIDO -->
-<div class="modal-overlay" id="orderModal" onclick="if(event.target===this)closeOrderModal()">
-  <div class="modal" style="max-width:360px;">
-    <button class="modal-close" onclick="closeOrderModal()">✕</button>
-    <div style="padding:24px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;" id="orderProdName"></div>
-      <div style="font-size:20px;font-weight:500;color:var(--primary-dark);margin-bottom:20px;" id="orderProdPrice"></div>
-      <div id="orderSizeGroup" style="margin-bottom:16px;">
-        <label style="font-size:13px;font-weight:500;display:block;margin-bottom:8px;">Escolha o tamanho</label>
-        <div id="orderSizeBtns" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
-      </div>
-      <div style="margin-bottom:20px;">
-        <label style="font-size:13px;font-weight:500;display:block;margin-bottom:8px;">Quantidade</label>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <button onclick="changeQty(-1)" style="width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:none;font-size:18px;cursor:pointer;">−</button>
-          <span id="qtyDisplay" style="font-size:18px;font-weight:500;min-width:24px;text-align:center;">1</span>
-          <button onclick="changeQty(1)" style="width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:none;font-size:18px;cursor:pointer;">+</button>
-        </div>
-      </div>
-      <div id="orderErr" style="font-size:12px;color:#9b1c1c;margin-bottom:12px;display:none;">Selecione um tamanho.</div>
-      <button onclick="confirmOrder()" style="width:100%;background:#25d366;color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Enviar pedido pelo WhatsApp
-      </button>
-    </div>
-  </div>
-</div>
+
 
 <!-- LOGIN -->
 <div class="login-overlay" id="loginOverlay">
@@ -531,7 +545,6 @@ let products=[], imgSlots=[null,null], currentCat=null;
 let catCovers={}, coverSlots={};
 let storeConfig={}, adminPass='mhcloset2024';
 let currentTheme='rosa';
-let orderProductId=null, orderQty=1, orderSelectedSize=null;
 
 const $=id=>document.getElementById(id);
 const loading=(v,m)=>{ $('loadingOverlay').classList.toggle('open',v); if(m) $('loadMsg').textContent=m; };
@@ -763,14 +776,83 @@ function renderProducts(catId){
     d.onclick=()=>openProdModal(p.id); g.appendChild(d); });
 }
 
-window.openProdModal=function(id){ const p=products.find(x=>x.id===id); if(!p) return;
-  const s=parseInt(p.stock)||0; const st=s===0?'❌ Sem estoque':s<=3?`⚠️ Últimas ${s} un.`:`✅ Em estoque (${s} un.)`;
-  $('modalName').textContent=p.name; $('modalPrice').textContent='R$ '+p.price;
-  $('modalDetails').innerHTML=(p.sizes?`<strong>Tamanhos:</strong> ${p.sizes}<br>`:'')+( p.measures?`<strong>Medidas:</strong> ${p.measures}<br>`:'')+( p.desc?`<strong>Descrição:</strong> ${p.desc}<br>`:'')+`<strong>Estoque:</strong> ${st}`;
-  $('modalImgs').innerHTML=p.imgs&&p.imgs.length?p.imgs.slice(0,2).map(u=>`<img src="${u}" alt="">`).join(''):'<div class="img-ph" style="width:100%;height:100%">📷</div>';
-  $('modalWppBtn').onclick=()=>buyWpp(id); $('prodModal').classList.add('open');
+let modalCurrentProduct = null;
+let modalSelectedSize = null;
+let modalQty = 1;
+
+window.openProdModal=function(id){
+  const p=products.find(x=>x.id===id); if(!p) return;
+  modalCurrentProduct=id; modalSelectedSize=null; modalQty=1;
+  $('modalName').textContent=p.name;
+  $('modalPrice').textContent='R$ '+p.price;
+  $('modalQtyVal').textContent='1';
+  $('modalErr').style.display='none';
+
+  // stock badge
+  const s=parseInt(p.stock)||0;
+  const sb=$('modalStockBadge');
+  if(s===0) sb.innerHTML='<span class="modal-stock-badge stock-out">Sem estoque</span>';
+  else if(s<=3) sb.innerHTML=`<span class="modal-stock-badge stock-low">Últimas ${s} unidades</span>`;
+  else sb.innerHTML=`<span class="modal-stock-badge stock-ok">Em estoque</span>`;
+
+  // detalhes
+  const dr=$('modalDetailRows'); dr.innerHTML='';
+  if(p.measures) dr.innerHTML+=`<div class="modal-detail-row"><strong>Medidas:</strong> ${p.measures}</div>`;
+  if(p.desc) dr.innerHTML+=`<div class="modal-detail-row"><strong>Descrição:</strong> ${p.desc}</div>`;
+
+  // tamanhos
+  const sg=$('modalSizeGroup'); const sb2=$('modalSizeBtns'); sb2.innerHTML='';
+  if(p.sizes&&p.sizes.trim()){
+    sg.style.display='block';
+    p.sizes.split(',').map(x=>x.trim()).filter(Boolean).forEach(sz=>{
+      const b=document.createElement('button'); b.className='modal-size-btn'; b.textContent=sz;
+      b.onclick=()=>{ document.querySelectorAll('.modal-size-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); modalSelectedSize=sz; $('modalErr').style.display='none'; };
+      sb2.appendChild(b);
+    });
+  } else { sg.style.display='none'; modalSelectedSize='Único'; }
+
+  // fotos — miniaturas + foto principal
+  const imgs=p.imgs&&p.imgs.length?p.imgs:[];
+  const thumbs=$('modalThumbs'); thumbs.innerHTML='';
+  const main=$('modalMainImg'); main.innerHTML='';
+
+  if(imgs.length===0){
+    main.innerHTML='<div class="img-ph" style="width:100%;height:100%;min-height:300px;">📷</div>';
+  } else {
+    const mainImg=document.createElement('img'); mainImg.src=imgs[0]; mainImg.id='modalMainImgEl'; main.appendChild(mainImg);
+    imgs.forEach((src,i)=>{
+      const t=document.createElement('div'); t.className='prod-thumb'+(i===0?' active':'');
+      t.innerHTML=`<img src="${src}" alt="foto ${i+1}">`;
+      t.onclick=()=>{
+        document.querySelectorAll('.prod-thumb').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+        const mi=$('modalMainImgEl'); if(mi){ mi.style.opacity='0'; setTimeout(()=>{ mi.src=src; mi.style.opacity='1'; },150); }
+      };
+      thumbs.appendChild(t);
+    });
+  }
+
+  $('modalWppBtn').onclick=()=>modalBuyWpp();
+  $('prodModal').classList.add('open');
 };
-window.closeModal=()=>$('prodModal').classList.remove('open');
+
+window.closeModal=()=>{ $('prodModal').classList.remove('open'); modalCurrentProduct=null; };
+
+window.modalChangeQty=function(d){
+  const p=products.find(x=>x.id===modalCurrentProduct);
+  const max=parseInt(p?.stock)||99;
+  modalQty=Math.max(1,Math.min(max,modalQty+d));
+  $('modalQtyVal').textContent=modalQty;
+};
+
+window.modalBuyWpp=function(){
+  const p=products.find(x=>x.id===modalCurrentProduct); if(!p) return;
+  if(p.sizes&&p.sizes.trim()&&!modalSelectedSize){ $('modalErr').style.display='block'; return; }
+  const c=CATS.find(x=>x.id===p.cat);
+  const wpp=storeConfig.wpp||'5597984455844';
+  const m=`Olá! 👋\n\nQuero fazer um pedido:\n\n*${p.name}*\nCategoria: ${c?c.name:''}\nPreço: R$ ${p.price}${modalSelectedSize&&modalSelectedSize!=='Único'?'\nTamanho: *'+modalSelectedSize+'*':''}\nQuantidade: *${modalQty} unidade${modalQty>1?'s':''}*${p.measures?'\nMedidas: '+p.measures:''}\n\nAguardo confirmação! 😊`;
+  closeModal();
+  window.open('https://wa.me/'+wpp+'?text='+encodeURIComponent(m),'_blank');
+};
 
 // ── WHATSAPP ──
 window.buyWpp=function(id){
