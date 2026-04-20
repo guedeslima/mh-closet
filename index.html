@@ -209,6 +209,12 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
       <div class="products-grid" id="productsGrid"></div>
     </div>
   </div>
+
+  <!-- RODAPÉ DISCRETO -->
+  <footer style="text-align:center;padding:32px 24px 16px;border-top:1px solid var(--border);margin-top:40px;">
+    <p style="font-size:12px;color:var(--border);">M&H Closet · Tefé, AM</p>
+    <button onclick="openLogin()" style="margin-top:8px;background:none;border:none;font-size:10px;color:var(--border);cursor:pointer;font-family:inherit;">área restrita</button>
+  </footer>
 </div>
 
 <!-- ADMIN -->
@@ -445,17 +451,8 @@ function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show');
 function compress(dataUrl){ return new Promise(res=>{ const i=new Image(); i.onload=()=>{ let w=i.width,h=i.height,r=Math.min(MAX_PX/w,MAX_PX/h,1); w=Math.round(w*r); h=Math.round(h*r); const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(i,0,0,w,h); res(c.toDataURL('image/jpeg',QUALITY)); }; i.src=dataUrl; }); }
 
 // ── SECRET ADMIN (clicar 5x no logo) ──
-// ── ABRIR ADMIN: #admin na URL OU 4 cliques no logo ──
+// ── ABRIR ADMIN VIA #admin na URL ──
 if(location.hash === '#admin') setTimeout(()=>openLogin(), 800);
-(function(){
-  let count = 0, timer = null;
-  document.querySelector('.logo').addEventListener('click', function(){
-    count++;
-    clearTimeout(timer);
-    timer = setTimeout(()=>{ count=0; }, 1500);
-    if(count >= 4){ count=0; openLogin(); }
-  });
-})();
 
 async function load(){
   loading(true,'Carregando...');
