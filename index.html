@@ -222,6 +222,7 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
       <button class="admin-tab active" id="tabAdd" onclick="showTab('add')">+ Adicionar produto</button>
       <button class="admin-tab" id="tabList" onclick="showTab('list')">Gerenciar produtos</button>
       <button class="admin-tab" id="tabCovers" onclick="showTab('covers')">Fotos das categorias</button>
+      <button class="admin-tab" id="tabConfig" onclick="showTab('config')">⚙️ Configurações</button>
     </div>
 
     <!-- FORM PRODUTO -->
@@ -300,6 +301,40 @@ nav.nav-cats::-webkit-scrollbar { display: none; }
         <p>Essa foto aparece no card da categoria na página inicial. Escolha uma imagem que represente bem cada categoria.</p>
         <div class="cat-covers-grid" id="catCoversGrid"></div>
         <button class="save-btn" style="margin-top:20px;" onclick="saveCovers()">Salvar fotos das categorias</button>
+      </div>
+
+    <!-- CONFIGURAÇÕES DA LOJA -->
+    <div id="adminConfig" style="display:none;">
+      <div class="cat-cover-section">
+        <h3>Configurações da loja</h3>
+        <p>Altere as informações da loja. As mudanças aparecem para todos os clientes na hora.</p>
+        <div class="form-group" style="margin-top:16px;">
+          <label>Nome da loja</label>
+          <input id="cfgName" placeholder="Ex: M&H Closet" />
+        </div>
+        <div class="form-group">
+          <label>Slogan / descrição</label>
+          <input id="cfgSlogan" placeholder="Ex: Moda feminina e masculina com estilo" />
+        </div>
+        <div class="form-group">
+          <label>Endereço</label>
+          <input id="cfgAddress" placeholder="Ex: Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>WhatsApp (com DDD, sem espaço)</label>
+            <input id="cfgWpp" placeholder="Ex: 97984455844" />
+          </div>
+          <div class="form-group">
+            <label>WhatsApp (exibição)</label>
+            <input id="cfgWppDisplay" placeholder="Ex: (97) 98445-5844" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cidade / Estado</label>
+          <input id="cfgCity" placeholder="Ex: Tefé, AM" />
+        </div>
+        <button class="save-btn" onclick="saveConfig()">Salvar configurações</button>
       </div>
     </div>
   </div>
@@ -400,6 +435,7 @@ const CATS = [
 
 let products = [], imgSlots = [null,null], currentCat = null;
 let catCovers = {}, coverSlots = {};
+let storeConfig = {};
 let secretCount = 0, secretTimer = null;
 
 const $ = id => document.getElementById(id);
@@ -432,9 +468,32 @@ async function load(){
     const covDoc = await getDoc(doc(db,'config','catCovers'));
     if(covDoc.exists()) catCovers = covDoc.data();
   } catch{}
+  // carregar config da loja
+  try {
+    const cfgDoc = await getDoc(doc(db,'config','store'));
+    if(cfgDoc.exists()) storeConfig = cfgDoc.data();
+  } catch{}
+  applyConfig();
   loading(false);
   renderHome();
   if(currentCat) renderProducts(currentCat);
+}
+
+
+function applyConfig(){
+  const name = storeConfig.name || 'M&H Closet';
+  const slogan = storeConfig.slogan || 'Moda feminina e masculina com estilo';
+  const address = storeConfig.address || 'Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM';
+  const city = storeConfig.city || 'Tefé, AM';
+  const wppDisplay = storeConfig.wppDisplay || '(97) 98445-5844';
+  // logo
+  const logoEl = document.querySelector('.logo');
+  if(logoEl){ const parts = name.split('&'); logoEl.innerHTML = parts.length>1 ? parts[0]+'<span>&</span>'+parts.slice(1).join('&') : name; }
+  // hero
+  const h1 = document.querySelector('.hero h1');
+  if(h1) h1.textContent = name;
+  const heroP = document.querySelector('.hero p');
+  if(heroP) heroP.innerHTML = address + '<br>' + slogan;
 }
 
 function renderHome(){
@@ -503,7 +562,7 @@ let orderProductId = null;
 let orderQty = 1;
 let orderSelectedSize = null;
 
-window.buyWpp=function(id){
+window.buyWpp=function(id){ const WPP_NUM=(storeConfig.wpp||WPP);
   const p=products.find(x=>x.id===id); if(!p) return;
   orderProductId=id; orderQty=1; orderSelectedSize=null;
   $('orderProdName').textContent=p.name;
@@ -548,7 +607,7 @@ window.confirmOrder=function(){
   const c=CATS.find(x=>x.id===p.cat);
   const m=`Olá, M&H Closet! 👋\n\nQuero fazer um pedido:\n\n*${p.name}*\nCategoria: ${c?c.name:''}\nPreço: R$ ${p.price}${orderSelectedSize&&orderSelectedSize!=='Único'?'\nTamanho: *'+orderSelectedSize+'*':''}\nQuantidade: *${orderQty} unidade${orderQty>1?'s':''}*${p.measures?'\nMedidas: '+p.measures:''}\n\nAguardo confirmação! 😊`;
   $('orderModal').classList.remove('open');
-  window.open('https://wa.me/'+WPP+'?text='+encodeURIComponent(m),'_blank');
+  window.open('https://wa.me/'+WPP_NUM+'?text='+encodeURIComponent(m),'_blank');
 };
 
 window.closeOrderModal=()=>{ $('orderModal').classList.remove('open'); orderProductId=null; };
@@ -559,10 +618,11 @@ window.doLogin=function(){ if($('loginPass').value===PASS){ closeLogin(); $('sto
 window.exitAdmin=function(){ $('adminView').style.display='none'; $('storeView').style.display='block'; };
 
 window.showTab=function(tab){
-  ['add','list','covers'].forEach(t=>{ $('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active',t===tab); $('admin'+t.charAt(0).toUpperCase()+t.slice(1)).style.display=t===tab?'block':'none'; });
+  ['add','list','covers','config'].forEach(t=>{ const btn=$('tab'+t.charAt(0).toUpperCase()+t.slice(1)); if(btn) btn.classList.toggle('active',t===tab); const panel=$('admin'+t.charAt(0).toUpperCase()+t.slice(1)); if(panel) panel.style.display=t===tab?'block':'none'; });
   if(tab==='list') renderAdminList();
   if(tab==='add') clearForm();
   if(tab==='covers') renderCatCovers();
+  if(tab==='config') loadConfigForm();
 };
 
 function buildAdminCatPicker(){
@@ -685,6 +745,34 @@ function renderCoverSlot(catId){
 window.handleCoverImg=function(e,catId){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async ev=>{ coverSlots[catId]=await compress(ev.target.result); renderCoverSlot(catId); }; r.readAsDataURL(f); e.target.value=''; };
 window.removeCover=function(catId){ coverSlots[catId]=null; renderCoverSlot(catId); };
 
+
+window.saveConfig = async function(){
+  const data = {
+    name: document.getElementById('cfgName').value.trim() || 'M&H Closet',
+    slogan: document.getElementById('cfgSlogan').value.trim(),
+    address: document.getElementById('cfgAddress').value.trim(),
+    wpp: document.getElementById('cfgWpp').value.trim().replace(/\D/g,''),
+    wppDisplay: document.getElementById('cfgWppDisplay').value.trim(),
+    city: document.getElementById('cfgCity').value.trim(),
+  };
+  loading(true,'Salvando configurações...');
+  try{
+    await setDoc(doc(db,'config','store'), data);
+    storeConfig = data;
+    applyConfig();
+    toast('✅ Configurações salvas!');
+  }catch(e){ toast('❌ Erro: '+e.message); }
+  loading(false);
+};
+
+function loadConfigForm(){
+  document.getElementById('cfgName').value = storeConfig.name || 'M&H Closet';
+  document.getElementById('cfgSlogan').value = storeConfig.slogan || 'Moda feminina e masculina com estilo';
+  document.getElementById('cfgAddress').value = storeConfig.address || 'Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM';
+  document.getElementById('cfgWpp').value = storeConfig.wpp || '97984455844';
+  document.getElementById('cfgWppDisplay').value = storeConfig.wppDisplay || '(97) 98445-5844';
+  document.getElementById('cfgCity').value = storeConfig.city || 'Tefé, AM';
+}
 window.saveCovers=async function(){
   loading(true,'Salvando capas...');
   try{
