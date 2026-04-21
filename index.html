@@ -26,6 +26,39 @@
 .tema-vinho { --primary:#8b1a2f;--primary-light:#fce8ec;--primary-dark:#5c0f1e;--bg:#fdf5f7;--border:#e0b0bb;--hero-bg:#fce8ec;--logo-color:#8b1a2f;--header-bg:#3d0810; }
 .tema-laranja { --primary:#d4620a;--primary-light:#fef0e6;--primary-dark:#a8460a;--bg:#fdf8f4;--border:#f0c898;--hero-bg:#fef0e6;--logo-color:#d4620a;--header-bg:#5c2200; }
 
+
+/* ── WHATSAPP FLUTUANTE ── */
+.wpp-float { position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,0.4);transition:transform 0.2s; }
+.wpp-float:hover { transform:scale(1.1); }
+
+/* ── BADGE PROMOÇÃO ── */
+.promo-badge { display:inline-block;background:#e53935;color:#fff;font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;margin-bottom:4px; }
+.prod-price-row { display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px; }
+.prod-price-old { font-size:13px;color:var(--gray);text-decoration:line-through; }
+.prod-price-new { font-size:18px;font-weight:500;color:#e53935; }
+.prod-price-normal { font-size:18px;font-weight:500;color:var(--primary-dark); }
+.modal-price-old { font-size:16px;color:var(--gray);text-decoration:line-through;margin-right:8px; }
+.modal-price-new { font-size:26px;font-weight:500;color:#e53935; }
+.modal-price-normal { font-size:26px;font-weight:500;color:var(--primary-dark); }
+
+/* ── BOTÃO COMPARTILHAR ── */
+.share-btn { background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--gray);cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s;margin-top:8px; }
+.share-btn:hover { border-color:var(--primary);color:var(--primary); }
+
+/* ── PÁGINA SOBRE ── */
+.sobre-section { padding:32px 24px;max-width:700px;margin:0 auto; }
+.sobre-card { background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px; }
+.sobre-card h3 { font-family:'Playfair Display',serif;font-size:18px;margin-bottom:12px; }
+.sobre-row { display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:14px;color:var(--gray);line-height:1.6; }
+.sobre-row strong { color:var(--dark);min-width:80px;flex-shrink:0; }
+.sobre-social { display:flex;gap:10px;flex-wrap:wrap;margin-top:8px; }
+.social-pill { background:var(--primary-light);color:var(--primary-dark);border-radius:20px;padding:6px 14px;font-size:13px;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all 0.2s; }
+.social-pill:hover { background:var(--primary);color:#fff; }
+.horario-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.horario-item { font-size:13px; }
+.horario-item .dia { color:var(--gray);font-size:12px; }
+.horario-item .hora { font-weight:500;color:var(--dark); }
+
 * { margin:0;padding:0;box-sizing:border-box; }
 body { font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark); }
 
@@ -278,6 +311,37 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
   </footer>
 </div>
 
+
+<!-- WHATSAPP FLUTUANTE -->
+<div class="wpp-float" id="wppFloat" onclick="openWppFloat()" title="Fale conosco">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+
+<!-- PÁGINA SOBRE -->
+<div id="sobreView" style="display:none;">
+  <div class="sobre-section">
+    <div class="sobre-card">
+      <h3 id="sobreNome">M&H Closet</h3>
+      <div class="sobre-row"><strong>📍 Endereço</strong><span id="sobreEndereco">Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM</span></div>
+      <div class="sobre-row"><strong>📱 WhatsApp</strong><span id="sobreWpp">(97) 98445-5844</span></div>
+      <div class="sobre-row"><strong>🏙️ Cidade</strong><span id="sobreCity">Tefé, AM</span></div>
+      <div id="sobreDescRow" class="sobre-row" style="display:none;"><strong>ℹ️ Sobre</strong><span id="sobreDesc"></span></div>
+    </div>
+    <div class="sobre-card" id="sobreHorasCard">
+      <h3>Horário de funcionamento</h3>
+      <div class="horario-grid" id="sobreHorario">
+        <div class="horario-item"><div class="dia">Segunda a Sexta</div><div class="hora" id="sobreHorasSemana">08h às 18h</div></div>
+        <div class="horario-item"><div class="dia">Sábado</div><div class="hora" id="sobreHorasSab">08h às 14h</div></div>
+        <div class="horario-item"><div class="dia">Domingo</div><div class="hora" id="sobreHorasDom">Fechado</div></div>
+      </div>
+    </div>
+    <div class="sobre-card" id="sobreSocialCard">
+      <h3>Redes sociais</h3>
+      <div class="sobre-social" id="sobreSocial"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ADMIN -->
 <div id="adminView">
   <div class="admin-header">
@@ -307,7 +371,11 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
         <div class="form-group"><label>Nome da peça *</label><input id="fName" placeholder="Ex: Vestido floral manga curta"></div>
         <div class="form-row">
           <div class="form-group"><label>Preço (R$) *</label><input id="fPrice" placeholder="89,90"></div>
+          <div class="form-group"><label>Preço original (riscado)</label><input id="fPriceOld" placeholder="129,90 (opcional)"></div>
+        </div>
+        <div class="form-row">
           <div class="form-group"><label>Estoque (qtd) *</label><input id="fStock" type="number" min="0" placeholder="10"></div>
+          <div class="form-group"><label>Etiqueta promo</label><input id="fPromo" placeholder="Ex: -30% OFF (opcional)"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Tamanhos</label><input id="fSizes" placeholder="P, M, G, GG"></div>
@@ -387,7 +455,22 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
         </div>
         <div class="form-group"><label>Cidade / Estado</label><input id="cfgCity" placeholder="Tefé, AM"></div>
         <div class="form-group"><label>Nova senha do admin</label><input id="cfgPass" type="password" placeholder="Deixe em branco para manter a atual"></div>
-        <button class="save-btn" onclick="saveConfig()">Salvar configurações</button>
+      </div>
+      <div class="panel-box">
+        <h3>Página "Sobre a loja"</h3>
+        <p>Informações exibidas na aba "Sobre" do menu.</p>
+        <div class="form-group"><label>Descrição da loja</label><textarea id="cfgDesc" rows="2" placeholder="Ex: Somos uma boutique especializada em moda feminina e masculina..."></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Horário seg–sex</label><input id="cfgHorasSemana" placeholder="08h às 18h"></div>
+          <div class="form-group"><label>Horário sábado</label><input id="cfgHorasSab" placeholder="08h às 14h"></div>
+        </div>
+        <div class="form-group"><label>Horário domingo</label><input id="cfgHorasDom" placeholder="Fechado"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Instagram (usuário)</label><input id="cfgInstagram" placeholder="@minhaloja"></div>
+          <div class="form-group"><label>Facebook (link ou usuário)</label><input id="cfgFacebook" placeholder="minhaloja"></div>
+        </div>
+        <div class="form-group"><label>TikTok (usuário)</label><input id="cfgTiktok" placeholder="@minhaloja"></div>
+        <button class="save-btn" onclick="saveConfig()">Salvar todas as configurações</button>
       </div>
     </div>
 
@@ -420,6 +503,7 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
           <button class="qty-btn" onclick="modalChangeQty(1)">+</button>
         </div>
         <div class="modal-err" id="modalErr">Por favor selecione um tamanho.</div>
+        <button class="share-btn" id="modalShareBtn">🔗 Compartilhar produto</button>
         <button class="modal-wpp-btn" id="modalWppBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Comprar pelo WhatsApp</button>
       </div>
     </div>
@@ -684,6 +768,13 @@ function loadConfigForm(){
   $('cfgWppDisplay').value=storeConfig.wppDisplay||'(97) 98445-5844';
   $('cfgCity').value=storeConfig.city||'Tefé, AM';
   $('cfgPass').value='';
+  if($('cfgDesc')) $('cfgDesc').value=storeConfig.desc||'';
+  if($('cfgHorasSemana')) $('cfgHorasSemana').value=storeConfig.horasSemana||'08h às 18h';
+  if($('cfgHorasSab')) $('cfgHorasSab').value=storeConfig.horasSab||'08h às 14h';
+  if($('cfgHorasDom')) $('cfgHorasDom').value=storeConfig.horasDom||'Fechado';
+  if($('cfgInstagram')) $('cfgInstagram').value=storeConfig.instagram||'';
+  if($('cfgFacebook')) $('cfgFacebook').value=storeConfig.facebook||'';
+  if($('cfgTiktok')) $('cfgTiktok').value=storeConfig.tiktok||'';
   renderThemes();
 }
 
@@ -752,6 +843,11 @@ function buildNav(){
     b.onclick=()=>{exitAdmin();openCat(c.id);};
     nav.appendChild(b);
   });
+  // botão Sobre
+  const bs=document.createElement('button'); bs.className='nav-cat'; bs.id='navSobre';
+  bs.textContent='ℹ️ Sobre a loja';
+  bs.onclick=()=>openSobre();
+  nav.appendChild(bs);
 }
 
 function openCat(id){
@@ -761,7 +857,65 @@ function openCat(id){
   document.querySelectorAll('.nav-cat').forEach(b=>b.classList.toggle('active',b.dataset.cat===id));
   renderProducts(id);
 }
-window.goHome=function(){ currentCat=null; $('catView').style.display='none'; $('homeView').style.display='block'; document.querySelectorAll('.nav-cat').forEach(b=>b.classList.remove('active')); };
+
+// ── SOBRE A LOJA ──
+window.openSobre=function(){
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('catView').style.display='none';
+  document.getElementById('sobreView').style.display='block';
+  document.querySelectorAll('.nav-cat').forEach(b=>b.classList.remove('active'));
+  document.getElementById('navSobre').classList.add('active');
+  // preencher dados
+  const s=storeConfig;
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val||''; };
+  set('sobreNome', s.name||'M&H Closet');
+  set('sobreEndereco', s.address||'Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM');
+  set('sobreWpp', s.wppDisplay||'(97) 98445-5844');
+  set('sobreCity', s.city||'Tefé, AM');
+  set('sobreHorasSemana', s.horasSemana||'08h às 18h');
+  set('sobreHorasSab', s.horasSab||'08h às 14h');
+  set('sobreHorasDom', s.horasDom||'Fechado');
+  const descRow=document.getElementById('sobreDescRow');
+  if(descRow){ descRow.style.display=s.desc?'flex':'none'; set('sobreDesc', s.desc||''); }
+  // redes sociais
+  const social=document.getElementById('sobreSocial');
+  const card=document.getElementById('sobreSocialCard');
+  if(social){
+    social.innerHTML='';
+    if(s.instagram) social.innerHTML+=`<a class="social-pill" href="https://instagram.com/${s.instagram.replace('@','')}" target="_blank">📸 ${s.instagram}</a>`;
+    if(s.facebook) social.innerHTML+=`<a class="social-pill" href="https://facebook.com/${s.facebook.replace('@','')}" target="_blank">👍 ${s.facebook}</a>`;
+    if(s.tiktok) social.innerHTML+=`<a class="social-pill" href="https://tiktok.com/${s.tiktok.replace('@','')}" target="_blank">🎵 ${s.tiktok}</a>`;
+    if(card) card.style.display=(s.instagram||s.facebook||s.tiktok)?'block':'none';
+  }
+};
+
+// ── COMPARTILHAR PRODUTO ──
+window.shareProduct=function(id){
+  const p=products.find(x=>x.id===id); if(!p) return;
+  const url=window.location.href.split('#')[0]+'#prod-'+id;
+  const text=`Confira: *${p.name}* por R$ ${p.price} — ${url}`;
+  if(navigator.share){
+    navigator.share({ title:p.name, text:`${p.name} — R$ ${p.price}`, url:window.location.href });
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(()=>{ 
+      const btn=document.getElementById('modalShareBtn');
+      if(btn){ const orig=btn.textContent; btn.textContent='✅ Link copiado!'; setTimeout(()=>btn.textContent=orig,2000); }
+    });
+  } else {
+    const wpp=storeConfig.wpp||'5597984455844';
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  }
+};
+
+// ── WHATSAPP FLUTUANTE ──
+window.openWppFloat=function(){
+  const wpp=storeConfig.wpp||'5597984455844';
+  const name=storeConfig.name||'M&H Closet';
+  const m=`Olá, ${name}! 👋 Gostaria de mais informações.`;
+  window.open('https://wa.me/'+wpp+'?text='+encodeURIComponent(m),'_blank');
+};
+
+window.goHome=function(){ currentCat=null; $('catView').style.display='none'; $('sobreView').style.display='none'; $('homeView').style.display='block'; document.querySelectorAll('.nav-cat').forEach(b=>b.classList.remove('active')); };
 
 // ── PRODUTOS ──
 function imgHtml(imgs){ return imgs&&imgs.length?imgs.slice(0,2).map(u=>`<img src="${u}" alt="foto" loading="lazy">`).join(''):'<div class="img-ph">📷</div>'; }
@@ -772,7 +926,12 @@ function renderProducts(catId){
   const g=$('productsGrid'); const items=products.filter(p=>p.cat===catId); g.innerHTML='';
   if(!items.length){ g.innerHTML='<div class="no-products" style="grid-column:1/-1"><span>🛍️</span>Nenhum produto nesta categoria ainda.</div>'; return; }
   items.forEach(p=>{ const d=document.createElement('div'); d.className='prod-card';
-    d.innerHTML=`<div class="prod-imgs">${imgHtml(p.imgs)}</div><div class="prod-info"><div class="prod-name">${p.name}</div><div class="prod-price">R$ ${p.price}</div><div class="prod-meta">${p.sizes?'<strong>Tamanhos:</strong> '+p.sizes+'<br>':''}${p.measures||''}</div>${stockBadge(p)}<button class="wpp-btn" onclick="event.stopPropagation();buyWpp('${p.id}')">${wppSvg} Comprar pelo WhatsApp</button></div>`;
+    const priceHtml = p.priceOld
+      ? `<div class="prod-price-row">${p.promo?`<span class="promo-badge">${p.promo}</span>`:''}
+         <span class="prod-price-old">R$ ${p.priceOld}</span>
+         <span class="prod-price-new">R$ ${p.price}</span></div>`
+      : `<div class="prod-price-row"><span class="prod-price-normal">R$ ${p.price}</span></div>`;
+    d.innerHTML=`<div class="prod-imgs">${imgHtml(p.imgs)}</div><div class="prod-info"><div class="prod-name">${p.name}</div>${priceHtml}<div class="prod-meta">${p.sizes?'<strong>Tamanhos:</strong> '+p.sizes+'<br>':''}${p.measures||''}</div>${stockBadge(p)}<button class="wpp-btn" onclick="event.stopPropagation();openProdModal('${p.id}')">${wppSvg} Comprar pelo WhatsApp</button></div>`;
     d.onclick=()=>openProdModal(p.id); g.appendChild(d); });
 }
 
@@ -784,7 +943,14 @@ window.openProdModal=function(id){
   const p=products.find(x=>x.id===id); if(!p) return;
   modalCurrentProduct=id; modalSelectedSize=null; modalQty=1;
   $('modalName').textContent=p.name;
-  $('modalPrice').textContent='R$ '+p.price;
+  // preço com ou sem promoção
+  const mp=$('modalPrice');
+  if(p.priceOld){
+    mp.innerHTML=(p.promo?`<span class="promo-badge" style="font-size:12px;margin-bottom:4px;display:inline-block;">${p.promo}</span><br>`:'')
+      +`<span class="modal-price-old">R$ ${p.priceOld}</span> <span class="modal-price-new">R$ ${p.price}</span>`;
+  } else {
+    mp.innerHTML=`<span class="modal-price-normal">R$ ${p.price}</span>`;
+  }
   $('modalQtyVal').textContent='1';
   $('modalErr').style.display='none';
 
@@ -832,6 +998,9 @@ window.openProdModal=function(id){
   }
 
   $('modalWppBtn').onclick=()=>modalBuyWpp();
+  // botão compartilhar
+  const shareEl=$('modalShareBtn');
+  if(shareEl) shareEl.onclick=()=>shareProduct(id);
   $('prodModal').classList.add('open');
 };
 
@@ -897,7 +1066,7 @@ window.closeOrderModal=()=>{ $('orderModal').classList.remove('open'); orderProd
 window.openLogin=function(){ $('loginPass').value=''; $('loginErr').style.display='none'; $('loginOverlay').classList.add('open'); setTimeout(()=>$('loginPass').focus(),100); };
 window.closeLogin=()=>$('loginOverlay').classList.remove('open');
 window.doLogin=function(){ if($('loginPass').value===adminPass){ closeLogin(); $('storeView').style.display='none'; $('adminView').style.display='block'; showTab('list'); } else $('loginErr').style.display='block'; };
-window.exitAdmin=function(){ $('adminView').style.display='none'; $('storeView').style.display='block'; };
+window.exitAdmin=function(){ $('adminView').style.display='none'; $('storeView').style.display='block'; $('sobreView').style.display='none'; $('homeView').style.display='block'; document.querySelectorAll('.nav-cat').forEach(b=>b.classList.remove('active')); };
 
 // ── TABS ──
 window.showTab=function(tab){
@@ -936,7 +1105,7 @@ function renderSlot(s){ const el=$('slot'+s); if(!el) return; if(imgSlots[s]){ e
 window.removeSlot=s=>{ imgSlots[s]=null; renderSlot(s); };
 
 function clearForm(){
-  ['fName','fPrice','fSizes','fMeasures','fStock','fDesc'].forEach(i=>{ const el=$(i); if(el) el.value=''; });
+  ['fName','fPrice','fPriceOld','fPromo','fSizes','fMeasures','fStock','fDesc'].forEach(i=>{ const el=$(i); if(el) el.value=''; });
   $('fCat').value=''; $('editId').value='';
   imgSlots=[null,null]; renderSlot(0); renderSlot(1);
   $('saveBtn').textContent='Salvar produto'; $('saveBtn').disabled=false;
@@ -952,7 +1121,7 @@ window.saveProduct=async function(){
   try{
     const editId=$('editId').value;
     const imgs=imgSlots.filter(Boolean);
-    const data={ name,price,cat,imgs, sizes:$('fSizes').value.trim(), measures:$('fMeasures').value.trim(), stock:$('fStock').value||'0', desc:$('fDesc').value.trim() };
+    const data={ name,price,cat,imgs, priceOld:$('fPriceOld').value.trim(), promo:$('fPromo').value.trim(), sizes:$('fSizes').value.trim(), measures:$('fMeasures').value.trim(), stock:$('fStock').value||'0', desc:$('fDesc').value.trim() };
     if(editId){ await updateDoc(doc(db,'products',editId),data); toast('✅ Produto atualizado!'); }
     else{ data.createdAt=Date.now(); await addDoc(collection(db,'products'),data); toast('✅ Produto adicionado!'); }
     await load(); clearForm(); showTab('list');
@@ -964,7 +1133,7 @@ window.editProduct=function(id){ const p=products.find(x=>x.id===id); if(!p) ret
   const c=CATS.find(x=>x.id===p.cat);
   $('fCat').value=p.cat||''; $('selectedCatLabel').textContent=c?c.emoji+' '+c.name:'';
   $('stepCat').style.display='none'; $('stepForm').style.display='block';
-  $('fName').value=p.name||''; $('fPrice').value=p.price||''; $('fSizes').value=p.sizes||''; $('fMeasures').value=p.measures||''; $('fStock').value=p.stock||''; $('fDesc').value=p.desc||''; $('editId').value=p.id;
+  $('fName').value=p.name||''; $('fPrice').value=p.price||''; $('fPriceOld').value=p.priceOld||''; $('fPromo').value=p.promo||''; $('fSizes').value=p.sizes||''; $('fMeasures').value=p.measures||''; $('fStock').value=p.stock||''; $('fDesc').value=p.desc||''; $('editId').value=p.id;
   imgSlots=p.imgs?[...p.imgs,null].slice(0,2):[null,null]; renderSlot(0); renderSlot(1); $('saveBtn').textContent='Atualizar produto';
 };
 
