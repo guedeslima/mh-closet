@@ -72,9 +72,11 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
 .nav-cat:hover { color:var(--dark); }
 .nav-cat.active { color:var(--primary);border-bottom-color:var(--primary);font-weight:500; }
 
-.hero { background:var(--hero-bg);padding:48px 24px;text-align:center; }
-.hero h1 { font-family:'Playfair Display',serif;font-size:36px;margin-bottom:8px; }
-.hero p { color:var(--gray);font-size:15px;margin-bottom:20px;line-height:1.7; }
+.hero { background:var(--hero-bg);padding:36px 24px 28px;text-align:center;border-bottom:1px solid var(--border); }
+.hero-deco { font-size:24px;margin-bottom:2px;display:block;letter-spacing:4px; }
+.hero h1 { font-family:'Playfair Display',serif;font-size:36px;font-weight:600;margin-bottom:10px;color:var(--dark);line-height:1.2; }
+.hero-address { font-size:13px;color:var(--gray);margin-bottom:2px; }
+.hero-slogan { font-size:14px;color:var(--gray);font-style:italic; }
 .payment-badges { display:flex;gap:8px;justify-content:center;flex-wrap:wrap; }
 .badge { background:var(--white);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--gray); }
 
@@ -258,7 +260,7 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
 .no-products span { font-size:36px;display:block;margin-bottom:8px; }
 
 @media(max-width:520px){
-  .hero h1{font-size:26px;}
+  .hero h1{font-size:26px;} .hero-deco{font-size:20px;}
   .products-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;}
   .form-row{grid-template-columns:1fr;}
   header{padding:0 14px;}
@@ -282,13 +284,22 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
   <nav class="nav-cats" id="navCats"></nav>
   <div id="homeView">
     <div class="hero">
+      <span class="hero-deco" id="heroDeco">🌸 🌸</span>
       <h1 id="heroTitle">M&H Closet</h1>
-      <p id="heroSub">Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM<br>Moda feminina e masculina com estilo</p>
-      <div class="payment-badges">
-        <span class="badge">💳 Cartão</span>
-        <span class="badge">💸 PIX</span>
-        <span class="badge">💵 Dinheiro</span>
-        <span class="badge">📍 Somente Tefé/AM</span>
+      <p class="hero-address" id="heroAddress">Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM</p>
+      <p class="hero-slogan" id="heroSlogan">Moda feminina e masculina com estilo</p>
+    </div>
+
+    <!-- SOBRE ABAIXO DO HERO -->
+    <div id="sobreInline" style="background:var(--white);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;">
+      <span style="font-size:13px;color:var(--gray);">📍 <span id="sobreInlineEnd">Rua Raimundo Lima, 398 — Tefé/AM</span></span>
+      <span style="font-size:13px;color:var(--gray);">📱 <span id="sobreInlineWpp">(97) 98445-5844</span></span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;color:var(--gray);">💳 Cartão</span>
+        <span style="font-size:12px;color:var(--gray);">·</span>
+        <span style="font-size:12px;color:var(--gray);">💸 PIX</span>
+        <span style="font-size:12px;color:var(--gray);">·</span>
+        <span style="font-size:12px;color:var(--gray);">💵 Dinheiro</span>
       </div>
     </div>
     <div class="section">
@@ -326,6 +337,14 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
       <div class="sobre-row"><strong>📱 WhatsApp</strong><span id="sobreWpp">(97) 98445-5844</span></div>
       <div class="sobre-row"><strong>🏙️ Cidade</strong><span id="sobreCity">Tefé, AM</span></div>
       <div id="sobreDescRow" class="sobre-row" style="display:none;"><strong>ℹ️ Sobre</strong><span id="sobreDesc"></span></div>
+      <div class="sobre-row" style="margin-top:8px;">
+        <strong>💳 Pagamento</strong>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="background:var(--primary-light);color:var(--primary-dark);border-radius:16px;padding:4px 12px;font-size:12px;">Cartão</span>
+          <span style="background:var(--primary-light);color:var(--primary-dark);border-radius:16px;padding:4px 12px;font-size:12px;">PIX</span>
+          <span style="background:var(--primary-light);color:var(--primary-dark);border-radius:16px;padding:4px 12px;font-size:12px;">Dinheiro</span>
+        </div>
+      </div>
     </div>
     <div class="sobre-card" id="sobreHorasCard">
       <h3>Horário de funcionamento</h3>
@@ -447,6 +466,7 @@ nav.nav-cats::-webkit-scrollbar { display:none; }
         <h3>Informações da loja</h3>
         <p>Tudo que você alterar aqui aparece para os clientes na hora.</p>
         <div class="form-group"><label>Nome da loja</label><input id="cfgName" placeholder="Ex: M&H Closet"></div>
+        <div class="form-group"><label>Decoração do título (emojis)</label><input id="cfgDeco" placeholder="Ex: 🌸 🌸 ou ✨ ✨"></div>
         <div class="form-group"><label>Slogan / descrição</label><input id="cfgSlogan" placeholder="Ex: Moda feminina e masculina com estilo"></div>
         <div class="form-group"><label>Endereço completo</label><input id="cfgAddress" placeholder="Ex: Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM"></div>
         <div class="form-row">
@@ -742,6 +762,7 @@ window.saveConfig=async function(){
   const newPass=$('cfgPass').value.trim();
   const data={
     name:$('cfgName').value.trim()||'M&H Closet',
+    deco:$('cfgDeco')?$('cfgDeco').value.trim()||'🌸 🌸':'🌸 🌸',
     slogan:$('cfgSlogan').value.trim()||'Moda feminina e masculina com estilo',
     address:$('cfgAddress').value.trim()||'Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM',
     wpp:$('cfgWpp').value.trim().replace(/\D/g,'')||'5597984455844',
@@ -762,6 +783,7 @@ window.saveConfig=async function(){
 
 function loadConfigForm(){
   $('cfgName').value=storeConfig.name||'M&H Closet';
+  if($('cfgDeco')) $('cfgDeco').value=storeConfig.deco||'🌸 🌸';
   $('cfgSlogan').value=storeConfig.slogan||'Moda feminina e masculina com estilo';
   $('cfgAddress').value=storeConfig.address||'Rua Raimundo Lima, 398 — Jerusalém, Tefé/AM';
   $('cfgWpp').value=storeConfig.wpp||'5597984455844';
